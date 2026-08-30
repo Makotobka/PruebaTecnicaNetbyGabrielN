@@ -1,8 +1,9 @@
-interface producto {
+import { DtoAuditoria } from './DtoAuditoria';
+
+export interface Producto {
   idProducto?: string;
   nombre?: string;
   descripcion?: string;
-  precio?: number;
   urlImagen?: string;
   precioUnitario?: number;
   stock?: number;

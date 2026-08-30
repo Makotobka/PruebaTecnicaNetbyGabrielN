@@ -1,4 +1,4 @@
-interface DtoAuditoria {
+export interface DtoAuditoria {
   id?: string;
   idRegistro?: string;
   accion?: string;

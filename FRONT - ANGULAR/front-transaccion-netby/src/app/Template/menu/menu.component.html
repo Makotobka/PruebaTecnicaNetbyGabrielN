@@ -1,0 +1,22 @@
+<aside class="menu-lateral" [class.menu-lateral--contraido]="contraido">
+  <div class="buscador-menu" *ngIf="!contraido">
+    <mat-icon>search</mat-icon>
+    <input type="search" placeholder="Buscar menú" aria-label="Buscar en el menú" />
+  </div>
+
+  <p class="ayuda-busqueda" *ngIf="!contraido">Presiona Enter para realizar la búsqueda</p>
+
+  <nav aria-label="Menú principal">
+    <a
+      *ngFor="let opcion of opciones"
+      class="opcion-menu"
+      [routerLink]="opcion.ruta || null"
+      routerLinkActive="opcion-menu--activa"
+      [routerLinkActiveOptions]="{ exact: opcion.ruta === '/inicio' }"
+      [attr.aria-label]="opcion.etiqueta">
+      <mat-icon>{{ opcion.icono }}</mat-icon>
+      <span *ngIf="!contraido">{{ opcion.etiqueta }}</span>
+      <mat-icon class="flecha" *ngIf="!contraido && !opcion.ruta">chevron_right</mat-icon>
+    </a>
+  </nav>
+</aside>

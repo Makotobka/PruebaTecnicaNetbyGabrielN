@@ -1,0 +1,13 @@
+.aplicacion {
+  min-height: 100vh;
+  background: #f2f4f6;
+}
+.cuerpo-aplicacion {
+  display: flex;
+  min-height: calc(100vh - 70px);
+}
+.contenido-principal {
+  min-width: 0;
+  flex: 1;
+  padding: 22px 28px;
+}

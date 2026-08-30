@@ -1,0 +1,9 @@
+<div class="aplicacion">
+  <app-barra-superior-menu (cambioMenu)="menuContraido = !menuContraido"></app-barra-superior-menu>
+  <div class="cuerpo-aplicacion">
+    <app-menu [contraido]="menuContraido"></app-menu>
+    <main class="contenido-principal">
+      <router-outlet></router-outlet>
+    </main>
+  </div>
+</div>

@@ -1,7 +1,7 @@
 import { DtoAuditoria } from './DtoAuditoria';
 
 export interface Transaccion {
-  idTransacciones?: string;
+  id?: string;
   idProducto?: string;
   fechaTransaccion?: Date;
   tipoTransaccion?: string;

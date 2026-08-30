@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ColumnMode } from '@swimlane/ngx-datatable';
-import { ConexionService } from '../../Service/conexion.service';
+import { ConexionProductosService } from '../../Service/conexion-productos.service';
 import { Producto } from '../../Shared/Interaces/DtoProductos';
 import { DialogoProductoComponent } from './dialogo-producto/dialogo-producto.component';
 
@@ -20,13 +20,14 @@ export class ProductosComponent implements OnInit {
 
   productos: Producto[] = [];
   filtroNombre = '';
+  filtroCategoria = '';
   filtroEstado: boolean | null = null;
   enviando = false;
   mensaje = '';
   error = '';
 
   constructor(
-    private readonly servicioConexion: ConexionService,
+    private readonly servicioConexion: ConexionProductosService,
     private readonly dialogo: MatDialog,
   ) {}
 
@@ -36,12 +37,16 @@ export class ProductosComponent implements OnInit {
 
   get productosFiltrados(): Producto[] {
     const nombre = this.filtroNombre.trim().toLocaleLowerCase();
+    const categoria = this.filtroCategoria.trim().toLocaleLowerCase();
     return this.productos.filter((producto) => {
       const coincideNombre =
         !nombre || producto.nombre?.toLocaleLowerCase().includes(nombre);
+      const coincideCategoria =
+        !categoria ||
+        producto.categoria?.toLocaleLowerCase().includes(categoria);
       const coincideEstado =
         this.filtroEstado === null || producto.estado === this.filtroEstado;
-      return coincideNombre && coincideEstado;
+      return coincideNombre && coincideCategoria && coincideEstado;
     });
   }
 
@@ -67,12 +72,14 @@ export class ProductosComponent implements OnInit {
 
   buscar(): void {
     this.mensaje = '';
+    this.cargarProductos();
   }
 
   limpiarFiltros(): void {
     this.filtroNombre = '';
     this.filtroEstado = null;
     this.mensaje = '';
+    this.productos = [];
   }
 
   abrirNuevo(): void {
@@ -85,14 +92,14 @@ export class ProductosComponent implements OnInit {
 
   guardarProducto(producto: Producto): void {
     this.enviando = true;
-    const solicitud = producto.idProducto
+    const solicitud = producto.id
       ? this.servicioConexion.ModificarProducto(producto)
       : this.servicioConexion.InsertarProducto(producto);
-
+    console.log('Solicitud enviada:', producto);
     solicitud.subscribe({
       next: () => {
         this.enviando = false;
-        this.mensaje = producto.idProducto
+        this.mensaje = producto.id
           ? 'Producto actualizado correctamente.'
           : 'Producto creado correctamente.';
         this.cargarProductos();
@@ -107,18 +114,36 @@ export class ProductosComponent implements OnInit {
 
   eliminarProducto(producto: Producto): void {
     if (
-      !producto.idProducto ||
+      !producto.id ||
       !confirm(`¿Deseas eliminar el producto "${producto.nombre}"?`)
     ) {
       return;
     }
-    this.servicioConexion.EliminarProducto(producto.idProducto).subscribe({
+    this.servicioConexion.EliminarProducto(producto.id).subscribe({
       next: () => {
         this.mensaje = 'Producto eliminado correctamente.';
         this.cargarProductos();
       },
       error: () => {
         this.error = 'No fue posible eliminar el producto.';
+      },
+    });
+  }
+
+  activarProducto(producto: Producto): void {
+    if (
+      !producto.id ||
+      !confirm(`¿Deseas activar el producto "${producto.nombre}"?`)
+    ) {
+      return;
+    }
+    this.servicioConexion.ActivarProducto(producto).subscribe({
+      next: () => {
+        this.mensaje = 'Producto activado correctamente.';
+        this.cargarProductos();
+      },
+      error: () => {
+        this.error = 'No fue posible activar el producto.';
       },
     });
   }

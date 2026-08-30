@@ -8,33 +8,60 @@
 <form [formGroup]="formulario" (ngSubmit)="guardar()">
   <mat-dialog-content>
     <div class="campos-formulario">
-      <label>Nombre<input formControlName="nombre" /></label>
-      <label>Categoría<input formControlName="categoria" /></label>
-      <label class="campo-completo"
-        >Descripción<textarea formControlName="descripcion" rows="3"></textarea>
-      </label>
-      <label
-        >Precio unitario<input
+      <mat-form-field appearance="outline">
+        <mat-label>Nombre</mat-label>
+        <input matInput formControlName="nombre" />
+        <mat-error *ngIf="formulario.controls['nombre'].hasError('required')">
+          El nombre es obligatorio.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Categoría</mat-label>
+        <input matInput formControlName="categoria" />
+        <mat-error *ngIf="formulario.controls['categoria'].hasError('required')">
+          La categoría es obligatoria.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo-completo">
+        <mat-label>Descripción</mat-label>
+        <textarea matInput formControlName="descripcion" rows="3"></textarea>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Precio unitario</mat-label>
+        <input
+          matInput
           formControlName="precioUnitario"
           type="number"
           min="0"
           step="0.01"
-      /></label>
-      <label
-        >Stock<input formControlName="stock" type="number" min="0" step="1"
-      /></label>
-      <label class="campo-completo"
-        >URL de imagen<input
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>Stock</mat-label>
+        <input matInput formControlName="stock" type="number" min="0" step="1" />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="campo-completo">
+        <mat-label>URL de imagen</mat-label>
+        <input
+          matInput
           formControlName="urlImagen"
           type="url"
           placeholder="https://..."
-      /></label>
-      <label class="selector-estado"
-        >Estado<select formControlName="estado">
-          <option [ngValue]="true">Activo</option>
-          <option [ngValue]="false">Inactivo</option>
-        </select></label
-      >
+        />
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="selector-estado">
+        <mat-label>Estado</mat-label>
+        <mat-select formControlName="estado">
+          <mat-option [value]="true">Activo</mat-option>
+          <mat-option [value]="false">Inactivo</mat-option>
+        </mat-select>
+      </mat-form-field>
     </div>
     <p class="validacion" *ngIf="formulario.invalid && formulario.touched">
       Completa los campos requeridos y verifica los valores.

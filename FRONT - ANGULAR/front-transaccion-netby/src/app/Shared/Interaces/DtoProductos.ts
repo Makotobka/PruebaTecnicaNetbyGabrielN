@@ -1,7 +1,7 @@
 import { DtoAuditoria } from './DtoAuditoria';
 
 export interface Producto {
-  idProducto?: string;
+  id?: string;
   nombre?: string;
   descripcion?: string;
   urlImagen?: string;

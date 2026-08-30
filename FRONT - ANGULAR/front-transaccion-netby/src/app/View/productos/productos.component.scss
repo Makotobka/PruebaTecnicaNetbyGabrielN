@@ -7,12 +7,15 @@
 .panel-filtros,
 .cabecera-tabla,
 .acciones-filtro {
+  flex: 0 0 100%;
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
 }
 .encabezado-pagina {
   justify-content: space-between;
   margin-bottom: 20px;
+  align-items: center;
 }
 .miga-pan {
   margin: 0 0 5px;
@@ -34,6 +37,9 @@ h1 {
   padding: 20px;
   background: #fff;
   border-bottom: 1px solid #e5e9ed;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
 }
 label {
   display: grid;
@@ -64,7 +70,7 @@ select {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 34px;
+  height: 34px;
   gap: 4px;
   padding: 0 17px;
   border: 1px solid #263442;
@@ -124,7 +130,6 @@ select {
   display: inline-grid;
   place-items: center;
   min-width: 23px;
-  height: 23px;
   background: #ffdc54;
   border-radius: 5px;
   font-size: 12px;

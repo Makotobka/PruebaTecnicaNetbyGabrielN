@@ -21,7 +21,7 @@ export class DialogoProductoComponent {
     private readonly referenciaDialogo: MatDialogRef<DialogoProductoComponent>,
     @Inject(MAT_DIALOG_DATA) private readonly datos: DatosDialogoProducto,
   ) {
-    this.esEdicion = !!datos.producto?.idProducto;
+    this.esEdicion = !!datos.producto?.id;
     this.formulario = this.constructorFormulario.group({
       nombre: [
         datos.producto?.nombre || '',
@@ -43,7 +43,7 @@ export class DialogoProductoComponent {
         datos.producto?.stock ?? 0,
         [
           Validators.required,
-          Validators.min(0),
+          Validators.min(1),
           Validators.pattern('^[0-9]+$'),
         ],
       ],
@@ -58,12 +58,15 @@ export class DialogoProductoComponent {
   guardar(): void {
     if (this.formulario.invalid) {
       this.formulario.markAllAsTouched();
+      alert(
+        'Por favor, complete todos los campos requeridos y corrija los errores antes de guardar.',
+      );
       return;
     }
 
     const producto: Producto = {
       ...this.formulario.getRawValue(),
-      idProducto: this.datos.producto?.idProducto,
+      id: this.datos.producto?.id,
       precioUnitario: Number(this.formulario.value.precioUnitario),
       stock: Number(this.formulario.value.stock),
     };

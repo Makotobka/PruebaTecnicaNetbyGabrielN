@@ -13,6 +13,9 @@ import { FormsModule } from '@angular/forms';
 import { NgxDatatableModule } from '@swimlane/ngx-datatable';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatSelectModule } from '@angular/material/select';
 import { DialogoProductoComponent } from './View/productos/dialogo-producto/dialogo-producto.component';
 
 @NgModule({
@@ -32,6 +35,9 @@ import { DialogoProductoComponent } from './View/productos/dialogo-producto/dial
     NgxDatatableModule,
     MatIconModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatSelectModule,
     TemplateModule,
   ],
   providers: [],

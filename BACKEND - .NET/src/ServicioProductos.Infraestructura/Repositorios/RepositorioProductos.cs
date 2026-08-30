@@ -16,5 +16,8 @@ public class RepositorioProductos(ContextoProductos contexto) : IRepositorioProd
     public Task AgregarAsync(Producto producto) =>
         contexto.Productos.AddAsync(producto).AsTask();
 
+    public Task AgregarAuditoriaAsync(AuditoriaProducto auditoria) =>
+        contexto.AuditoriasProductos.AddAsync(auditoria).AsTask();
+
     public Task GuardarCambiosAsync() => contexto.SaveChangesAsync();
 }

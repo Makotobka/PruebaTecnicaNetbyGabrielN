@@ -9,6 +9,10 @@ using ServicioProductosAplicacion = ServicioProductos.Aplicacion.Servicios.Servi
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
+builder.Services.AddCors(opciones => opciones.AddPolicy("PermitirAngular", politica => politica
+    .WithOrigins("http://localhost:4200")
+    .AllowAnyHeader()
+    .AllowAnyMethod()));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(opciones => opciones.SwaggerDoc("v1", new OpenApiInfo
 {
@@ -18,6 +22,8 @@ builder.Services.AddSwaggerGen(opciones => opciones.SwaggerDoc("v1", new OpenApi
 }));
 builder.Services.AddDbContext<ContextoProductos>(opciones => opciones.UseSqlServer(builder.Configuration.GetConnectionString("Productos")));
 builder.Services.AddScoped<IRepositorioProductos, RepositorioProductos>();
+builder.Services.AddScoped<IRepositorioAuditoriaProducto, RepositorioAuditoriaProducto>();
+
 builder.Services.AddScoped<IServicioProductos, ServicioProductosAplicacion>();
 var aplicacion = builder.Build();
 if (aplicacion.Environment.IsDevelopment())
@@ -26,5 +32,6 @@ if (aplicacion.Environment.IsDevelopment())
     aplicacion.UseSwaggerUI(opciones => opciones.SwaggerEndpoint("/swagger/v1/swagger.json", "Servicio de Productos v1"));
 }
 aplicacion.UseHttpsRedirection();
+aplicacion.UseCors("PermitirAngular");
 aplicacion.MapControllers();
 aplicacion.Run();

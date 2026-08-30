@@ -1,7 +1,8 @@
 export const environment = {
   production: false,
-  serviceUrl: 'http://localhost:44375/api/',
-  aplicationName: 'SGC',
+  serviceUrlTransaccion: 'http://localhost:44375/api/',
+  serviceUrlProducto: 'http://localhost:44375/api/',
+  aplicationName: 'DEMO',
   idioma: 'es',
   separadorMiles: '.',
   separadorDecimal: ',',

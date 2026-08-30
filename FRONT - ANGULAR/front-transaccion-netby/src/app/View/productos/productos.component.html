@@ -11,11 +11,21 @@
 
 <section class="panel-filtros" aria-label="Filtros de productos">
   <label
-    >Nombre o categoría<input
+    >Producto
+    <input
       [(ngModel)]="filtroNombre"
       (keyup.enter)="buscar()"
       placeholder="Buscar producto"
-  /></label>
+    />
+  </label>
+  <label
+    >Categoría
+    <input
+      [(ngModel)]="filtroCategoria"
+      (keyup.enter)="buscar()"
+      placeholder="Buscar categoría"
+    />
+  </label>
   <label
     >Estado<select [(ngModel)]="filtroEstado">
       <option [ngValue]="null">Todos</option>
@@ -40,11 +50,6 @@
     <h2>
       Registros de productos <span>{{ productosFiltrados.length }}</span>
     </h2>
-    <input
-      [(ngModel)]="filtroNombre"
-      placeholder="Buscar en esta página..."
-      aria-label="Buscar productos"
-    />
   </div>
   <ngx-datatable
     class="material tabla-productos"
@@ -53,7 +58,7 @@
     [headerHeight]="48"
     [footerHeight]="48"
     [rowHeight]="56"
-    [limit]="10"
+    [limit]="5"
     [sorts]="ordenInicial"
     [messages]="mensajesTabla"
   >
@@ -89,19 +94,31 @@
         ><button
           class="accion editar"
           type="button"
+          *ngIf="row.estado"
           (click)="editarProducto(row)"
           aria-label="Editar producto"
         >
-          <mat-icon>edit</mat-icon></button
-        ><button
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
           class="accion eliminar"
           type="button"
+          *ngIf="row.estado"
           (click)="eliminarProducto(row)"
           aria-label="Eliminar producto"
         >
           <mat-icon>delete_outline</mat-icon>
-        </button></ng-template
-      ></ngx-datatable-column
+        </button>
+        <button
+          class="accion eliminar"
+          type="button"
+          *ngIf="!row.estado"
+          (click)="activarProducto(row)"
+          aria-label="Activar producto"
+        >
+          <mat-icon>check_circle_outline</mat-icon>
+        </button>
+      </ng-template></ngx-datatable-column
     >
   </ngx-datatable>
 </section>

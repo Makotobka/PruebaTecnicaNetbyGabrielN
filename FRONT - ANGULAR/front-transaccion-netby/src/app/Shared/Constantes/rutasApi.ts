@@ -1,8 +1,9 @@
 export const RUTAS_APIS_PRODUCTOS = {
-  OBTENER_PRODUCTOS: 'productos/obtenerProductos',
-  INSERTAR_PRODUCTO: 'productos/insertarProducto',
-  MODIFICAR_PRODUCTO: 'productos/modificarProducto',
-  ELIMINAR_PRODUCTO: 'productos/eliminarProducto',
+  GET_OBTENER_TODOS_PRODUCTOS: 'productos',
+  POST_INSERTAR_PRODUCTO: 'productos',
+  PUT_MODIFICAR_PRODUCTO: 'productos/', //'productos/{id}',
+  DELETE_ELIMINAR_PRODUCTO: 'productos/', //'productos/{id}',
+  PUT_ACTIVAR_PRODUCTO: 'productos/activar/', //'productos/activar/{id}',
 };
 
 export const RUTAS_APIS_TRANSACCIONES = {

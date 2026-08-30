@@ -1,0 +1,79 @@
+.encabezado-dialogo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #9ba5ad;
+}
+.encabezado-dialogo h2 {
+  margin: 0;
+  color: #777;
+  font-size: 20px;
+  font-weight: 400;
+}
+.encabezado-dialogo button {
+  border: 0;
+  background: none;
+  color: #e33d4a;
+  cursor: pointer;
+}
+.campos-formulario {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 10px;
+  padding-top: 8px;
+}
+label {
+  display: grid;
+  gap: 6px;
+  color: #687581;
+  font-size: 12px;
+}
+input,
+select,
+textarea {
+  box-sizing: border-box;
+  width: 100%;
+  border: 1px solid #9ba5ad;
+  border-radius: 4px;
+  padding: 9px 11px;
+  color: #26323d;
+  font: inherit;
+  outline-color: #2878f0;
+}
+.campo-completo {
+  grid-column: 1 / -1;
+}
+.selector-estado {
+  max-width: 190px;
+}
+.validacion {
+  margin: 14px 0 0;
+  color: #c43c3c;
+  font-size: 12px;
+}
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 34px;
+  gap: 4px;
+  padding: 0 17px;
+  border: 1px solid #263442;
+  border-radius: 20px;
+  background: #fff;
+  color: #263442;
+  font: inherit;
+  cursor: pointer;
+}
+.boton mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+.boton.primario {
+  border-color: #253846;
+  background: #253846;
+  color: #8ee249;
+}

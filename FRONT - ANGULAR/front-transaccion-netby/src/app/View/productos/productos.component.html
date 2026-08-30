@@ -1,1 +1,107 @@
-<p>productos works!</p>
+<header class="encabezado-pagina">
+  <div>
+    <p class="miga-pan">INVENTARIOS / PRODUCTOS</p>
+    <h1>Gestión de productos</h1>
+    <p>Administra el catálogo y el stock disponible.</p>
+  </div>
+  <button class="boton primario" type="button" (click)="abrirNuevo()">
+    <mat-icon>add</mat-icon> Nuevo producto
+  </button>
+</header>
+
+<section class="panel-filtros" aria-label="Filtros de productos">
+  <label
+    >Nombre o categoría<input
+      [(ngModel)]="filtroNombre"
+      (keyup.enter)="buscar()"
+      placeholder="Buscar producto"
+  /></label>
+  <label
+    >Estado<select [(ngModel)]="filtroEstado">
+      <option [ngValue]="null">Todos</option>
+      <option [ngValue]="true">Activo</option>
+      <option [ngValue]="false">Inactivo</option>
+    </select></label
+  >
+  <div class="acciones-filtro">
+    <button class="boton secundario" type="button" (click)="buscar()">
+      <mat-icon>search</mat-icon> Buscar</button
+    ><button class="boton limpiar" type="button" (click)="limpiarFiltros()">
+      <mat-icon>close</mat-icon> Limpiar
+    </button>
+  </div>
+</section>
+
+<p class="mensaje exito" *ngIf="mensaje">{{ mensaje }}</p>
+<p class="mensaje error" *ngIf="error">{{ error }}</p>
+
+<section class="panel-tabla">
+  <div class="cabecera-tabla">
+    <h2>
+      Registros de productos <span>{{ productosFiltrados.length }}</span>
+    </h2>
+    <input
+      [(ngModel)]="filtroNombre"
+      placeholder="Buscar en esta página..."
+      aria-label="Buscar productos"
+    />
+  </div>
+  <ngx-datatable
+    class="material tabla-productos"
+    [rows]="productosFiltrados"
+    [columnMode]="ColumnMode.force"
+    [headerHeight]="48"
+    [footerHeight]="48"
+    [rowHeight]="56"
+    [limit]="10"
+    [sorts]="ordenInicial"
+    [messages]="mensajesTabla"
+  >
+    <ngx-datatable-column name="Estado" [width]="95"
+      ><ng-template ngx-datatable-cell-template let-row="row"
+        ><span class="estado" [class.estado--inactivo]="row.estado === false">{{
+          etiquetaEstado(row)
+        }}</span></ng-template
+      ></ngx-datatable-column
+    >
+    <ngx-datatable-column
+      name="Producto"
+      prop="nombre"
+      [minWidth]="180"
+    ></ngx-datatable-column>
+    <ngx-datatable-column
+      name="Categoría"
+      prop="categoria"
+      [minWidth]="130"
+    ></ngx-datatable-column>
+    <ngx-datatable-column name="Precio" [width]="110"
+      ><ng-template ngx-datatable-cell-template let-row="row">{{
+        row.precioUnitario | currency: "USD"
+      }}</ng-template></ngx-datatable-column
+    >
+    <ngx-datatable-column
+      name="Stock"
+      prop="stock"
+      [width]="85"
+    ></ngx-datatable-column>
+    <ngx-datatable-column name="Acciones" [sortable]="false" [width]="112"
+      ><ng-template ngx-datatable-cell-template let-row="row"
+        ><button
+          class="accion editar"
+          type="button"
+          (click)="editarProducto(row)"
+          aria-label="Editar producto"
+        >
+          <mat-icon>edit</mat-icon></button
+        ><button
+          class="accion eliminar"
+          type="button"
+          (click)="eliminarProducto(row)"
+          aria-label="Eliminar producto"
+        >
+          <mat-icon>delete_outline</mat-icon>
+        </button></ng-template
+      ></ngx-datatable-column
+    >
+  </ngx-datatable>
+</section>

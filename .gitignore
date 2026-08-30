@@ -27,5 +27,11 @@ Thumbs.db
 !.env.example
 
 # ignorar .net
+.vs/
+[Bb]in/
+[Oo]bj/
+*.user
+*.rsuser
+*.suo
 
 # ignorar SQL

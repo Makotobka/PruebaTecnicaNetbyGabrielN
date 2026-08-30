@@ -1,0 +1,73 @@
+.barra-superior {
+  display: flex;
+  align-items: center;
+  height: 70px;
+  box-sizing: border-box;
+  padding: 0 24px;
+  background: #f7f7f8;
+  border-bottom: 1px solid #dde3e8;
+  color: #1e2933;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.12);
+}
+
+.boton-icono,
+.boton-informacion {
+  display: inline-grid;
+  place-items: center;
+  border: 0;
+  background: transparent;
+  color: #111827;
+  cursor: pointer;
+}
+
+.boton-icono {
+  margin-right: 25px;
+}
+.marca-aplicacion {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 18px;
+}
+.marca-aplicacion mat-icon {
+  color: #111;
+}
+.acciones-superiores {
+  display: flex;
+  align-items: center;
+  gap: 17px;
+  margin-left: auto;
+}
+.acciones-superiores ::ng-deep .mat-slide-toggle-label {
+  font-size: 12px;
+}
+.boton-informacion {
+  color: #03a9ee;
+}
+.boton-informacion mat-icon {
+  font-size: 36px;
+  width: 36px;
+  height: 36px;
+}
+.datos-usuario {
+  display: grid;
+  line-height: 1.1;
+  font-size: 11px;
+}
+.datos-usuario strong {
+  font-size: 13px;
+}
+.datos-usuario small {
+  font-size: 11px;
+}
+.avatar-usuario {
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #334155;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}

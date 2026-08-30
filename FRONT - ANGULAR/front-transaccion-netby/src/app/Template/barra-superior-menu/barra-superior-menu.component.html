@@ -1,0 +1,24 @@
+<header class="barra-superior">
+  <button
+    class="boton-icono"
+    type="button"
+    aria-label="Mostrar u ocultar menú"
+    (click)="alternarMenu()"
+  >
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <div class="marca-aplicacion">
+    <mat-icon>schedule</mat-icon>
+    <span>{{ fechaActual | date: "dd/MM/yyyy h:mm:ss a" }}</span>
+  </div>
+
+  <div class="acciones-superiores">
+    <div class="datos-usuario">
+      <strong>GABRIEL NUÑEZ V.</strong>
+      <span>QUITO - MATRIZ</span>
+      <small>Administrador</small>
+    </div>
+    <div class="avatar-usuario" aria-label="Usuario actual">GN</div>
+  </div>
+</header>

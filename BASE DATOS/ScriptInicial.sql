@@ -16,7 +16,7 @@ CREATE TABLE Dbo.Producto
     UrlImagen       NVARCHAR(2048) NULL,
     PrecioUnitario  DECIMAL(18, 2) NOT NULL,
     Stock           INT NOT NULL CONSTRAINT DF_Producto_Stock DEFAULT (0),
-    Estado			BIT NOT NULL CONSTRAINT DF_Producto_EstaActivo DEFAULT (1),
+    Estado			BIT NOT NULL CONSTRAINT DF_Producto_EstaActivo DEFAULT (1)
 );
 GO
 
@@ -31,7 +31,7 @@ CREATE TABLE Dbo.Transacciones
     PrecioTotal             AS CONVERT(DECIMAL(18, 2), Cantidad * PrecioUnitario) PERSISTED,
     Detalle                 NVARCHAR(1000) NULL,
     Estado					BIT NOT NULL CONSTRAINT DF_Transacciones_EstaEliminada DEFAULT (1),
-    CONSTRAINT FK_Transacciones_Producto FOREIGN KEY (IdProducto) REFERENCES Dbo.Producto(Id),
+    CONSTRAINT FK_Transacciones_Producto FOREIGN KEY (IdProducto) REFERENCES Dbo.Producto(Id)
 );
 GO
 
@@ -62,4 +62,46 @@ CREATE TABLE Dbo.AuditoriaTransacciones
         FOREIGN KEY (IdTransacciones)
         REFERENCES Dbo.Transacciones(Id),
 );
+GO
+
+CREATE OR ALTER TRIGGER Dbo.TR_Transacciones_ActualizarStock
+ON Dbo.Transacciones
+AFTER INSERT
+AS
+BEGIN
+    SET NOCOUNT ON;
+
+    DECLARE @Movimientos TABLE
+    (
+        IdProducto UNIQUEIDENTIFIER NOT NULL PRIMARY KEY,
+        DiferenciaStock INT NOT NULL
+    );
+
+    INSERT INTO @Movimientos (IdProducto, DiferenciaStock)
+    SELECT
+        IdProducto,
+        SUM(CASE UPPER(TipoTransaccion)
+            WHEN 'COMPRA' THEN Cantidad
+            WHEN 'VENTA' THEN -Cantidad
+            ELSE 0
+        END)
+    FROM inserted
+    GROUP BY IdProducto;
+
+    IF EXISTS
+    (
+        SELECT 1
+        FROM Dbo.Producto producto
+        INNER JOIN @Movimientos movimiento ON movimiento.IdProducto = producto.Id
+        WHERE producto.Stock + movimiento.DiferenciaStock < 0
+    )
+    BEGIN
+        THROW 50001, 'Stock insuficiente para registrar la venta.', 1;
+    END;
+
+    UPDATE producto
+    SET Stock = producto.Stock + movimiento.DiferenciaStock
+    FROM Dbo.Producto producto
+    INNER JOIN @Movimientos movimiento ON movimiento.IdProducto = producto.Id;
+END;
 GO

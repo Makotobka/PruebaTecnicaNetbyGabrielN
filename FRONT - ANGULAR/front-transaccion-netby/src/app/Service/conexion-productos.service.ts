@@ -40,6 +40,18 @@ export class ConexionProductosService {
     );
   }
 
+  ObtenerProductosFiltros(producto?: Producto): Observable<Producto[]> {
+    const url =
+      this.URL_SERVICE_PRODUCTO +
+      RUTAS_APIS_PRODUCTOS.POST_OBTENER_PRODUCTOS_FILTROS;
+    const body = producto ? JSON.stringify(producto) : null;
+    return this.httpClient.post<Producto[]>(
+      url,
+      body,
+      this.utilService.adjuntarUsuario(),
+    );
+  }
+
   EliminarProducto(idProducto: string): Observable<any> {
     const url =
       this.URL_SERVICE_PRODUCTO +

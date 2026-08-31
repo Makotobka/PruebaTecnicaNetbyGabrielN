@@ -3,7 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { RUTAS_APIS_TRANSACCIONES } from '../Shared/Constantes/rutasApi';
-import { Transaccion } from '../Shared/Interaces/DtoTransacciones';
+import {
+  Transaccion,
+  TransaccionProducto,
+} from '../Shared/Interaces/DtoTransacciones';
 import { UtilService } from './util.service';
 
 @Injectable({
@@ -22,8 +25,9 @@ export class ConexionTransaccionService {
   InsertarTransaccion(dto: Transaccion): Observable<Transaccion> {
     const url =
       this.URL_SERVICE_TRANSACCION +
-      RUTAS_APIS_TRANSACCIONES.INSERTAR_TRANSACCION;
+      RUTAS_APIS_TRANSACCIONES.POST_INSERTAR_TRANSACCION;
     const body = JSON.stringify(dto);
+    console.log(dto);
     return this.httpClient.post<Transaccion>(
       url,
       body,
@@ -33,8 +37,18 @@ export class ConexionTransaccionService {
   ObtenerTransacciones(): Observable<Transaccion[]> {
     const url =
       this.URL_SERVICE_TRANSACCION +
-      RUTAS_APIS_TRANSACCIONES.OBTENER_TRANSACCIONES;
+      RUTAS_APIS_TRANSACCIONES.GET_OBTENER_TRANSACCIONES;
     return this.httpClient.get<Transaccion[]>(
+      url,
+      this.utilService.adjuntarUsuario(),
+    );
+  }
+
+  ObtenerTransaccionesProducto(): Observable<TransaccionProducto[]> {
+    const url =
+      this.URL_SERVICE_TRANSACCION +
+      RUTAS_APIS_TRANSACCIONES.GET_OBTENER_TRANSACCIONES_PRODUCTO;
+    return this.httpClient.get<TransaccionProducto[]>(
       url,
       this.utilService.adjuntarUsuario(),
     );
@@ -43,7 +57,7 @@ export class ConexionTransaccionService {
   EliminarTransaccion(idTransaccion: string): Observable<any> {
     const url =
       this.URL_SERVICE_TRANSACCION +
-      RUTAS_APIS_TRANSACCIONES.ELIMINAR_TRANSACCION +
+      RUTAS_APIS_TRANSACCIONES.DELETE_ELIMINAR_TRANSACCION +
       '/' +
       idTransaccion;
     return this.httpClient.delete<void>(
@@ -55,7 +69,7 @@ export class ConexionTransaccionService {
   ModificarTransaccion(dto: Transaccion): Observable<Transaccion> {
     const url =
       this.URL_SERVICE_TRANSACCION +
-      RUTAS_APIS_TRANSACCIONES.MODIFICAR_TRANSACCION;
+      RUTAS_APIS_TRANSACCIONES.PUT_MODIFICAR_TRANSACCION;
     const body = JSON.stringify(dto);
     return this.httpClient.put<Transaccion>(
       url,

@@ -10,29 +10,34 @@
 </header>
 
 <section class="panel-filtros" aria-label="Filtros de productos">
-  <label
-    >Producto
+  <mat-form-field appearance="outline" class="filtro-campo">
+    <mat-label>Producto</mat-label>
     <input
+      matInput
       [(ngModel)]="filtroNombre"
       (keyup.enter)="buscar()"
       placeholder="Buscar producto"
     />
-  </label>
-  <label
-    >Categoría
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="filtro-campo">
+    <mat-label>Categoría</mat-label>
     <input
+      matInput
       [(ngModel)]="filtroCategoria"
       (keyup.enter)="buscar()"
       placeholder="Buscar categoría"
     />
-  </label>
-  <label
-    >Estado<select [(ngModel)]="filtroEstado">
-      <option [ngValue]="null">Todos</option>
-      <option [ngValue]="true">Activo</option>
-      <option [ngValue]="false">Inactivo</option>
-    </select></label
-  >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="filtro-campo">
+    <mat-label>Estado</mat-label>
+    <mat-select [(ngModel)]="filtroEstado">
+      <mat-option [value]="null">Todos</mat-option>
+      <mat-option [value]="true">Activo</mat-option>
+      <mat-option [value]="false">Inactivo</mat-option>
+    </mat-select>
+  </mat-form-field>
   <div class="acciones-filtro">
     <button class="boton secundario" type="button" (click)="buscar()">
       <mat-icon>search</mat-icon> Buscar</button

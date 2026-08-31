@@ -1,0 +1,205 @@
+<header mat-dialog-title class="encabezado-dialogo">
+  <h2>{{ esEdicion ? "Editar transacción" : "Agregar transacción" }}</h2>
+  <button type="button" (click)="cancelar()" aria-label="Cerrar">
+    <mat-icon>close</mat-icon>
+  </button>
+</header>
+<div *ngIf="!isVistaProductoVisible; else ListaProductosTemplate">
+  <ng-template [ngTemplateOutlet]="ListaTransaccionesTemplate"> </ng-template>
+</div>
+
+<ng-template #ListaProductosTemplate>
+  <form [formGroup]="formulario" (ngSubmit)="buscarProductos()">
+    <mat-dialog-content>
+      <div fxLayout="row wrap" fxLayoutGap="12px" fxLayoutAlign="start center">
+        <div
+          fxFlex="100"
+          fxFlex.lt-md="100"
+          style="align-items: baseline; justify-content: center"
+        >
+          <mat-form-field fxFlex="70" fxFlex.lt-md="100" appearance="outline">
+            <mat-label>Nombre del producto</mat-label>
+            <input matInput formControlName="nombreBusquedaProducto" />
+          </mat-form-field>
+          <div
+            fxFlex="30"
+            fxFlex.lt-md="100"
+            style="align-items: baseline; justify-content: center"
+          >
+            <button
+              class="boton primario"
+              type="button"
+              (click)="buscarProductos()"
+              fxFlex="none"
+            >
+              <mat-icon>search</mat-icon>Buscar
+            </button>
+          </div>
+        </div>
+
+        <div fxFlex="80" fxFlex.lt-md="100" *ngIf="listaProductos.length > 0">
+          <h3>Lista de productos</h3>
+          <ul>
+            <li
+              *ngFor="let producto of listaProductos"
+              (click)="seleccionarProducto(producto)"
+            >
+              <div
+                class="producto-item"
+                fxLayout="row wrap"
+                style="align-items: center; justify-content: space-between"
+              >
+                <div fxFlex="60">
+                  <div class="producto-info">
+                    <span class="producto-categoria"
+                      >{{ producto.categoria }} -
+                    </span>
+                    <span class="producto-nombre">{{ producto.nombre }}</span>
+                  </div>
+                  <div class="producto-stock">
+                    <span>Stock disponible: {{ producto.stock }}</span>
+                  </div>
+                </div>
+                <div fxFlex="23">
+                  <button
+                    class="boton primario"
+                    type="button"
+                    (click)="seleccionarProducto(producto)"
+                    fxFlex="none"
+                  >
+                    <mat-icon>send</mat-icon>Seleccionar
+                  </button>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </mat-dialog-content>
+  </form>
+</ng-template>
+
+<ng-template #ListaTransaccionesTemplate>
+  <form [formGroup]="formulario" (ngSubmit)="guardar()">
+    <mat-dialog-content>
+      <div class="campos-busqueda" fxLayout="row wrap">
+        <mat-form-field fxFlex="22" fxFlex.lt-md="100" appearance="outline">
+          <mat-label>Nombre del producto</mat-label>
+          <input matInput formControlName="nombreProducto" />
+          <mat-error
+            *ngIf="formulario.controls['nombreProducto'].hasError('required')"
+          >
+            El nombre del producto es obligatorio.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          fxFlex="22"
+          fxFlex.lt-md="100"
+          appearance="outline"
+          disabled
+        >
+          <mat-label>Categoria del producto</mat-label>
+          <input matInput formControlName="categoriaProducto" />
+          <mat-error
+            *ngIf="
+              formulario.controls['categoriaProducto'].hasError('required')
+            "
+          >
+            La categoría del producto es obligatoria.
+          </mat-error>
+        </mat-form-field>
+        <mat-form-field
+          fxFlex="22"
+          fxFlex.lt-md="100"
+          appearance="outline"
+          disabled
+        >
+          <mat-label>Stock actual</mat-label>
+          <input matInput formControlName="stockProducto" />
+          <mat-error
+            *ngIf="formulario.controls['stockProducto'].hasError('required')"
+          >
+            El stock del producto es obligatorio.
+          </mat-error>
+        </mat-form-field>
+        <div fxFlex="22" fxFlex.lt-md="100">
+          <button
+            class="boton primario"
+            type="button"
+            (click)="seleccionarProducto()"
+            fxFlex="none"
+          >
+            <mat-icon>search</mat-icon>Buscar
+          </button>
+        </div>
+      </div>
+      <div class="border-divisor"></div>
+      <div
+        *ngIf="formulario?.getRawValue()?.idProducto; else ProductoFaltante"
+        class="campos-formulario"
+        fxLayout="row wrap"
+      >
+        <mat-form-field fxFlex="45" appearance="outline">
+          <mat-label>Tipo de transacción</mat-label>
+          <mat-select formControlName="TipoTransaccion">
+            <mat-option [value]="'COMPRA'">COMPRA</mat-option>
+            <mat-option [value]="'VENTA'">VENTA</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45" appearance="outline">
+          <mat-label>Cantidad</mat-label>
+          <input
+            matInput
+            formControlName="cantidad"
+            type="number"
+            min="0"
+            step="1"
+          />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45" appearance="outline">
+          <mat-label>Precio unitario</mat-label>
+          <input
+            matInput
+            formControlName="precioUnitario"
+            type="number"
+            min="0"
+            step="0.01"
+          />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="45" appearance="outline">
+          <mat-label>Precio total</mat-label>
+          <input
+            matInput
+            formControlName="precioTotal"
+            type="number"
+            min="0"
+            step="0.01"
+          />
+        </mat-form-field>
+
+        <mat-form-field fxFlex="98" appearance="outline" appearance="outline">
+          <mat-label>Detalle de transaccion</mat-label>
+          <input matInput formControlName="detalle" />
+        </mat-form-field>
+      </div>
+      <p class="validacion" *ngIf="formulario.invalid && formulario.touched">
+        Completa los campos requeridos y verifica los valores.
+      </p>
+    </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button class="boton limpiar" type="button" (click)="cancelar()">
+        Cancelar
+      </button>
+      <button class="boton primario" type="submit">
+        <mat-icon>save</mat-icon>Guardar
+      </button>
+    </mat-dialog-actions>
+  </form>
+</ng-template>
+
+<ng-template #ProductoFaltante>
+  <h5>Primero seleccione un producto para realizar la transacción</h5>
+</ng-template>

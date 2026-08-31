@@ -4,6 +4,7 @@ namespace ServicioTransacciones.Infraestructura.Persistencia;
 public sealed class ContextoTransacciones(DbContextOptions<ContextoTransacciones> options) : DbContext(options)
 {
     public DbSet<TransaccionInventario> Transacciones => Set<TransaccionInventario>();
+    public DbSet<ProductoConsulta> Productos => Set<ProductoConsulta>();
     public DbSet<AuditoriaTransaccion> AuditoriasTransacciones => Set<AuditoriaTransaccion>();
     protected override void OnModelCreating(ModelBuilder modelo)
     {
@@ -30,6 +31,15 @@ public sealed class ContextoTransacciones(DbContextOptions<ContextoTransacciones
             entidad.Property(auditoria => auditoria.UsuarioCambio).HasMaxLength(128).IsRequired();
             entidad.Property(auditoria => auditoria.ValoresAnteriores).HasColumnType("nvarchar(max)");
             entidad.Property(auditoria => auditoria.ValoresNuevos).HasColumnType("nvarchar(max)");
+        });
+
+        modelo.Entity<ProductoConsulta>(entidad =>
+        {
+            entidad.ToTable("Producto", "Dbo");
+            entidad.HasKey(producto => producto.Id);
+            entidad.Property(producto => producto.Nombre).HasMaxLength(150);
+            entidad.Property(producto => producto.Categoria).HasMaxLength(100);
+            entidad.Property(producto => producto.UrlImagen).HasMaxLength(2048);
         });
     }
 }

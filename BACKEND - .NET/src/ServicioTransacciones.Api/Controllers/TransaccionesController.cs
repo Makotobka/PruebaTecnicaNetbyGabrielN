@@ -15,4 +15,7 @@ public sealed class TransaccionesController(ServicioTransaccionesAplicacion serv
         if (string.IsNullOrWhiteSpace(usuarioCambio)) return BadRequest("Debe enviar el encabezado X-Usuario");
         return Ok(await servicio.RegistrarAsync(transaccion, usuarioCambio));
     }
+
+    [HttpGet("producto")]
+    public Task<IReadOnlyList<TransaccionInventarioProducto>> ObtenerTransaccionProductoTodos() => servicio.ObtenerTransaccionProductoTodosAsync();
 }

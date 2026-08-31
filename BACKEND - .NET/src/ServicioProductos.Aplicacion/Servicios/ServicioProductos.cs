@@ -11,6 +11,9 @@ public sealed class ServicioProductos(IRepositorioProductos repositorio) : IServ
     public async Task<List<Producto>> ObtenerTodosAsync()
         => await repositorio.ObtenerTodosAsync();
 
+    public async Task<List<Producto>> ObtenerFiltrado(Producto producto)
+        => await repositorio.ObtenerFiltrados(producto);
+
     public async Task<Producto> CrearAsync(Producto producto, string usuarioCambio)
     {
         producto.Id = Guid.NewGuid();

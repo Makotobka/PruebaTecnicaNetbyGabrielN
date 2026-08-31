@@ -16,7 +16,9 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogoProductoComponent } from './View/productos/dialogo-producto/dialogo-producto.component';
+import { DialogoTransaccionesComponent } from './View/transacciones/dialogo-transacciones/dialogo-transacciones.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,7 @@ import { DialogoProductoComponent } from './View/productos/dialogo-producto/dial
     ProductosComponent,
     TransaccionesComponent,
     DialogoProductoComponent,
+    DialogoTransaccionesComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +41,7 @@ import { DialogoProductoComponent } from './View/productos/dialogo-producto/dial
     MatFormFieldModule,
     MatInputModule,
     MatSelectModule,
+    FlexLayoutModule,
     TemplateModule,
   ],
   providers: [],

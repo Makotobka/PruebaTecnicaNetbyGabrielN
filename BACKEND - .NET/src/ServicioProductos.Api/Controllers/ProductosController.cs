@@ -22,6 +22,10 @@ public sealed class ProductosController(IServicioProductos servicio) : Controlle
         return CreatedAtAction(nameof(ObtenerTodos), new { id = creado.Id }, creado);
     }
 
+    [HttpPost("buscarFiltros")]
+    public Task<List<Producto>> Consultar(Producto producto) => servicio.ObtenerFiltrado(producto);
+
+
     [HttpPut("{id:guid}")]
     public async Task<ActionResult<Producto>> Actualizar(
         Guid id, 

@@ -1,18 +1,21 @@
 using ServicioTransacciones.Dominio.Contratos;
 using ServicioTransacciones.Dominio.Entidades;
+using ServicioTransacciones.Dominio.Enumeraciones;
 using System.Text.Json;
 namespace ServicioTransacciones.Aplicacion.Servicios;
-public sealed class ServicioTransacciones(IRepositorioTransacciones repositorio)
+public class ServicioTransacciones(IRepositorioTransacciones repositorio)
 {
     public Task<IReadOnlyList<TransaccionInventario>> ObtenerTodosAsync() => repositorio.ObtenerTodosAsync();
+    public Task<IReadOnlyList<TransaccionInventarioProducto>> ObtenerTransaccionProductoTodosAsync() => repositorio.ObtenerTransaccionProductoTodosAsync();
     public async Task<TransaccionInventario> RegistrarAsync(TransaccionInventario transaccion, string usuarioCambio)
     {
         if (transaccion.Cantidad <= 0) throw new ArgumentException("La cantidad debe ser mayor a cero.");
+        transaccion.Id = Guid.NewGuid();
         await repositorio.AgregarAsync(transaccion);
         await repositorio.AgregarAuditoriaAsync(new AuditoriaTransaccion
         {
-            IdTransacciones = transaccion.Id,
-            Accion = "I",
+            IdTransacciones = new Guid(),
+            Accion = GetEnumAccionTablaLogs.ToDescriptionString(EnumAccionTablaLogs.Crear),
             FechaCambioUtc = DateTime.UtcNow,
             UsuarioCambio = usuarioCambio,
             ValoresNuevos = JsonSerializer.Serialize(new

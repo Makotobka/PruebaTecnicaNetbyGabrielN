@@ -1,1 +1,113 @@
-<p>transacciones works!</p>
+<header class="encabezado-pagina">
+  <div>
+    <p class="miga-pan">INVENTARIOS / TRANSACCIONES</p>
+    <h1>Transacciones comerciales</h1>
+    <p>Registra transacciones de compra y venta</p>
+  </div>
+  <button class="boton primario" type="button" (click)="abrirNuevo()">
+    <mat-icon>add</mat-icon> Nueva transacción
+  </button>
+</header>
+
+<section class="panel-filtros" aria-label="Filtros de productos">
+  <mat-form-field appearance="outline" class="filtro-campo">
+    <mat-label>Fecha inicio</mat-label>
+    <input matInput type="date" [(ngModel)]="filtroFechaInicio" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="filtro-campo">
+    <mat-label>Fecha fin</mat-label>
+    <input matInput type="date" [(ngModel)]="filtroFechaFin" />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="filtro-campo">
+    <mat-label>Tipo de transacción</mat-label>
+    <mat-select [(ngModel)]="filtroTipo">
+      <mat-option value="">Todos</mat-option>
+      <mat-option value="Compra">Compra</mat-option>
+      <mat-option value="Venta">Venta</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="acciones-filtro">
+    <button class="boton secundario" type="button" (click)="buscar()">
+      <mat-icon>search</mat-icon> Buscar</button
+    ><button class="boton limpiar" type="button" (click)="limpiarFiltros()">
+      <mat-icon>close</mat-icon> Limpiar
+    </button>
+  </div>
+</section>
+
+<p class="mensaje exito" *ngIf="mensaje">{{ mensaje }}</p>
+<p class="mensaje error" *ngIf="error">{{ error }}</p>
+
+<section class="panel-tabla">
+  <div class="cabecera-tabla">
+    <h2>
+      Registros de transacciones <span>{{ transacciones.length }}</span>
+    </h2>
+  </div>
+  <ngx-datatable
+    class="material tabla-productos"
+    [rows]="transacciones"
+    [columnMode]="ColumnMode.force"
+    [headerHeight]="48"
+    [footerHeight]="48"
+    [rowHeight]="56"
+    [limit]="10"
+    [sorts]="ordenInicial"
+    [messages]="mensajesTabla"
+  >
+    <ngx-datatable-column name="Estado" [width]="95"
+      ><ng-template ngx-datatable-cell-template let-row="row"
+        ><span class="estado" [class.estado--inactivo]="row.estado === false">{{
+          etiquetaEstado(row)
+        }}</span></ng-template
+      ></ngx-datatable-column
+    >
+
+    <ngx-datatable-column
+      [width]="200"
+      name="Categoria producto"
+      prop="categoria"
+    >
+    </ngx-datatable-column>
+
+    <ngx-datatable-column [width]="200" name="Producto" prop="nombre">
+    </ngx-datatable-column>
+
+    <ngx-datatable-column
+      name="Tipo de transacción"
+      prop="tipo"
+      [minWidth]="150"
+    ></ngx-datatable-column>
+
+    <ngx-datatable-column
+      name="Cantidad"
+      prop="cantidad"
+      [minWidth]="90"
+    ></ngx-datatable-column>
+
+    <ngx-datatable-column name="Precio Unit" [width]="150"
+      ><ng-template ngx-datatable-cell-template let-row="row">{{
+        row.precioUnitario | currency: "USD"
+      }}</ng-template></ngx-datatable-column
+    >
+
+    <ngx-datatable-column name="Precio Total" [width]="150"
+      ><ng-template ngx-datatable-cell-template let-row="row">
+        {{ row.precioTotal | currency: "USD" }}
+      </ng-template>
+    </ngx-datatable-column>
+
+    <ngx-datatable-column name="Acciones" [sortable]="false" [width]="112"
+      ><ng-template ngx-datatable-cell-template let-row="row"
+        ><button
+          class="accion"
+          type="button"
+          aria-label="Ver detalle de transacción"
+          (click)="abrirDetalle(row)"
+        ></button> </ng-template
+    ></ngx-datatable-column>
+  </ngx-datatable>
+</section>

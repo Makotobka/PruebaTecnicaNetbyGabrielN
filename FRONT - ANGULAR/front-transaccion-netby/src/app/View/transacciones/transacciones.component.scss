@@ -1,0 +1,154 @@
+.productos {
+  max-width: 1320px;
+  margin: 0 auto;
+  color: #273442;
+}
+.encabezado-pagina,
+.panel-filtros,
+.cabecera-tabla,
+.acciones-filtro {
+  flex: 0 0 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+.encabezado-pagina {
+  justify-content: space-between;
+  margin-bottom: 20px;
+  align-items: center;
+}
+.miga-pan {
+  margin: 0 0 5px;
+  color: #6c7a89;
+  font-size: 11px;
+  font-weight: 700;
+}
+h1 {
+  margin: 0;
+  font-size: 25px;
+  font-weight: 600;
+}
+.encabezado-pagina p:not(.miga-pan) {
+  margin: 5px 0 0;
+  color: #6c7a89;
+}
+.panel-filtros {
+  gap: 8px 12px;
+  padding: 14px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e5e9ed;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+.filtro-campo {
+  flex: 0 1 190px;
+  max-width: 250px;
+  font-size: 13px;
+}
+.panel-filtros ::ng-deep .mat-form-field-wrapper {
+  padding-bottom: 0;
+}
+.acciones-filtro {
+  align-self: end;
+  gap: 9px;
+}
+.boton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 34px;
+  gap: 4px;
+  padding: 0 17px;
+  border: 1px solid #263442;
+  border-radius: 20px;
+  background: #fff;
+  color: #263442;
+  font: inherit;
+  cursor: pointer;
+}
+.boton mat-icon {
+  width: 18px;
+  height: 18px;
+  font-size: 18px;
+}
+.boton.primario {
+  border-color: #253846;
+  background: #253846;
+  color: #8ee249;
+}
+.boton.secundario {
+  border-color: #2472ff;
+  color: #2472ff;
+}
+.boton:disabled {
+  cursor: wait;
+  opacity: 0.6;
+}
+.mensaje {
+  margin: 12px 0;
+  padding: 10px 13px;
+  border-radius: 4px;
+  font-size: 13px;
+}
+.exito {
+  background: #eaf8ed;
+  color: #216d34;
+}
+.error {
+  background: #fff0f0;
+  color: #b92d2d;
+}
+.panel-tabla {
+  background: #fff;
+  padding: 22px 20px;
+}
+.cabecera-tabla {
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+.cabecera-tabla h2 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 500;
+}
+.cabecera-tabla h2 span {
+  display: inline-grid;
+  place-items: center;
+  min-width: 23px;
+  background: #ffdc54;
+  border-radius: 5px;
+  font-size: 12px;
+}
+.cabecera-tabla input {
+  max-width: 360px;
+}
+.tabla-productos {
+  box-shadow: none;
+}
+.estado {
+  color: #177a43;
+  font-size: 12px;
+  font-weight: 600;
+}
+.estado--inactivo {
+  color: #c43c3c;
+}
+.accion {
+  width: 30px;
+  height: 30px;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+.accion mat-icon {
+  font-size: 19px;
+}
+.editar {
+  color: #1875d1;
+}
+.eliminar {
+  color: #c63d3d;
+}

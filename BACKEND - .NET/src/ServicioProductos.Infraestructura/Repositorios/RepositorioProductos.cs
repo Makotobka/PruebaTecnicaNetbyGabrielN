@@ -10,6 +10,22 @@ public class RepositorioProductos(ContextoProductos contexto) : IRepositorioProd
     public async Task<List<Producto>> ObtenerTodosAsync()
         => await contexto.Productos.Include(producto => producto.Auditorias).OrderBy(producto => producto.Id).ToListAsync();
 
+    public async Task<List<Producto>> ObtenerFiltrados(Producto producto)
+    {
+        var consulta = contexto.Productos.Where(x => x.Estado);
+
+        if ( producto?.Id != Guid.Empty)
+            return await contexto.Productos.Where(x => x.Id == producto.Id).ToListAsync();
+
+        if (string.IsNullOrEmpty(producto?.Nombre) == false)
+            consulta = consulta.Where(x => x.Nombre.Contains(producto.Nombre));
+
+        //=> await contexto.Productos.Include(producto => producto.Auditorias).OrderBy(producto => producto.Id).ToListAsync();
+        return await consulta.ToListAsync();
+    }
+
+
+
     public Task<Producto?> ObtenerPorIdAsync(Guid id) =>
         contexto.Productos.Include(producto => producto.Auditorias).FirstOrDefaultAsync(producto => producto.Id == id);
 
